@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-5 mx-auto">
+
+            <h3 class="bg-primary text-white p-3">{{ getName() }}'s Todo List</h3>
+
+            <div class="input-group mb-3">
+                <input type="text" name="newItemTxt" id="newItemTxt" class="form-control"
+                    (keyup.enter)="addItem()" [(ngModel)]="inputText">
+                <button [class]="getBtnClasses()" class="btn"
+                    (click)="addItem()">Add</button>
+            </div>
+
+            <div class="form-check mb-3">
+                <input type="checkbox" [(ngModel)]="displayAll" class="form-check-input" name="" id="displayAll">
+                <label for="displayAll" class="form-check-label">Hepsini Göster</label>
+            </div>
+
+            <div class="my-2">{{ getFinishedCount() }} görev tamamlandı.</div>
+            <div class="alert alert-warning" *ngIf="getItems().length == 0 else itemTable">
+                Tüm görevler tamamlandı.
+            </div>
+
+            <ng-template #itemTable>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of getItems(), let i = index;"
+                            [class]="{'bg-primary': item.action, 'bg-warning': !item.action}">
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ item.description }}</td>
+                            <td><input type="checkbox" name="itemStateChk" id="itemStateChk" [(ngModel)]="item.action">
+                            </td>
+                    </tbody>
+                </table>
+            </ng-template>
+
+        </div>
+    </div>
+</div>
